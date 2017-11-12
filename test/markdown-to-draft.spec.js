@@ -1,15 +1,15 @@
 import { markdownToDraft, draftToMarkdown } from '../src/index';
 
 describe('markdownToDraft', function () {
+  it('renders empty text correctly', function () {
+    var markdown = '';
+    var conversionResult = markdownToDraft(markdown);
+
+    expect(conversionResult.blocks[0].text).toEqual('');
+    expect(conversionResult.blocks[0].type).toEqual('unstyled');
+  });
+
   describe ('codeblocks', function () {
-    it('renders empty text correctly', function () {
-      var markdown = '';
-      var conversionResult = markdownToDraft(markdown);
-
-      expect(conversionResult.blocks[0].text).toEqual('');
-      expect(conversionResult.blocks[0].type).toEqual('unstyled');
-    });
-
     it ('renders single-line codeblock correctly', function () {
       var markdown = '```\nsingle line codeblock\n```';
       var conversionResult = markdownToDraft(markdown);
@@ -44,7 +44,7 @@ describe('markdownToDraft', function () {
   });
 
   it('renders links correctly', function () {
-    var markdown = 'This is a test of [a link](https://google.com)\n\n\n\nAnd [perhaps](https://facebook.github.io/draft-js/) we should test once more.';
+    var markdown = 'This is a test of [a link](https://google.com)\n\n\nAnd [perhaps](https://facebook.github.io/draft-js/) we should test once more.';
     var conversionResult = markdownToDraft(markdown);
     expect(conversionResult.blocks[0].text).toEqual('This is a test of a link');
     expect(conversionResult.blocks[0].type).toEqual('unstyled');
@@ -66,7 +66,7 @@ describe('markdownToDraft', function () {
   });
 
   it('renders "the kitchen sink" correctly', function () {
-    var markdown = '# Hello!\n\nMy name is **Rose** :) \nToday, I\'m here to talk to you about how great markdown is!\n\n## First, here\'s a few bullet points:\n\n- One\n- Two\n- Three\n\n```\nA codeblock\n```\n\nAnd then... `some monospace text`?\nOr... _italics?_';
+    var markdown = '# Hello!\nMy name is **Rose** :) \nToday, I\'m here to talk to you about how great markdown is!\n## First, here\'s a few bullet points:\n- One\n- Two\n- Three\n\n```\nA codeblock\n```\nAnd then... `some monospace text`?\nOr... _italics?_';
     var conversionResult = markdownToDraft(markdown);
     expect(conversionResult.blocks[0].text).toEqual('Hello!');
     expect(conversionResult.blocks[0].type).toEqual('header-one');
